@@ -2,17 +2,19 @@ const convertButton = document.querySelector(".convert-button");
 const currencySelected = document.querySelector(".currency-type-to");
 const currencySelectedFrom = document.querySelector(".currency-type-from");
 
-function convertValues() {
+async function convertValues() {
     const inputCurrencyToConvert = parseFloat(document.querySelector(".input-currency-to-convert").value);
     const currencyValueBox = document.querySelector("#currency-value-to-convert");
     const currencyValueConvertedBox = document.querySelector("#currency-value-converted");
 
-    const exchangeRates = {
-        "Real": 1,
-        "Dollar": 5.23,
-        "Euro": 5.69,
-        "Libra": 6.68,
-        "Bitcoin": 334.34
+    const exchangeRate = await fetch("https://economia.awesomeapi.com.br/last/USD-BRL,EUR-BRL,BTC-BRL,GBP-BRL").then(response => response.json())
+    console.log(exchangeRate);
+    const exchangeRates= {
+        
+        "Dollar": exchangeRate.USBRL.high,
+        "Euro": exchangeRate.EURBRL.high,
+        "Libra": exchangeRate.GBPBRL.high,
+        "Bitcoin": exchangeRate.BTCBRL.high
     };
 
     const fromCurrency = currencySelectedFrom.value;
